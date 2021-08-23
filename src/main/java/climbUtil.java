@@ -13,7 +13,10 @@ import java.io.IOException;
  */
 public class climbUtil {
     public static void main(String[] args) {
-        climb("qq_37221991");
+        //        爬所有
+//        climb("weixin_36380516");
+//        爬单个
+        climbOne("weixin_36380516","109302548");
     }
 
     private static void climb(String userName) {
@@ -50,6 +53,22 @@ public class climbUtil {
                 climbDetailById(baseUrl, articleId);
             }
         }
+        System.out.println("》》》》》》》爬虫结束《《《《《《《");
+    }
+
+    private static void climbOne(String userName,String articleId) {
+        System.out.println("》》》》》》》爬虫开始《《《《《《《");
+        // 把下面这个base_url换成你csdn的地址
+        String baseUrl = "https://blog.csdn.net/" + userName + "/";
+        String secondUrl = baseUrl + "article/list/";
+        // 创建文件夹
+        File file = new File("./_posts/");
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        System.out.println(articleId);
+        // 爬取单篇文章
+        climbDetailById(baseUrl, articleId);
         System.out.println("》》》》》》》爬虫结束《《《《《《《");
     }
 
