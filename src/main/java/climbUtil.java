@@ -14,7 +14,7 @@ import java.io.IOException;
 public class climbUtil {
     public static void main(String[] args) {
         //        爬所有
-//        climb("weixin_36380516");
+        climb("qq_45774645");
 //        爬单个
        // climbOne("unique_perfect","109380996");
         climbDetailByUrl("https://blog.csdn.net/qq_45774645/article/details/123489756?spm=1001.2014.3001.5502");
