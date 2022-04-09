@@ -1,3 +1,5 @@
+package com.liu.utils;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,7 +13,7 @@ import java.io.IOException;
  * 爬csdn博客工具
  * create by zhangtao
  */
-public class climbUtil {
+public class ClimbUtil {
     public static void main(String[] args) {
         //        爬所有
         climb("qq_45774645");
@@ -20,8 +22,7 @@ public class climbUtil {
         climbDetailByUrl("https://blog.csdn.net/qq_45774645/article/details/123489756?spm=1001.2014.3001.5502");
     }
 
-    private static void climb(String userName) {
-        System.out.println("》》》》》》》爬虫开始《《《《《《《");
+    public static void climb(String userName) {
         // 把下面这个base_url换成你csdn的地址
         String baseUrl = "https://blog.csdn.net/" + userName + "/";
         String secondUrl = baseUrl + "article/list/";
@@ -49,12 +50,10 @@ public class climbUtil {
             for (Element e : elements) {
                 // 拿到文章id
                 String articleId = e.attr("data-articleid");
-                System.out.println(articleId);
                 // 爬取单篇文章
                 climbDetailById(baseUrl, articleId);
             }
         }
-        System.out.println("》》》》》》》爬虫结束《《《《《《《");
     }
 
     private static void climbOne(String userName,String articleId) {
@@ -73,7 +72,7 @@ public class climbUtil {
         System.out.println("》》》》》》》爬虫结束《《《《《《《");
     }
 
-    private static void climbDetailByUrl(String csdnUrl) {
+    public static void climbDetailByUrl(String csdnUrl) {
         File file = new File("./_posts/");
         if (!file.exists()) {
             file.mkdir();

@@ -10,7 +10,7 @@
 ## 例如：
 ### 获取单个文章markdown
 ```java
-public class climbUtil {
+public class ClimbUtil {
     public static void main(String[] args) {
         climbDetailByUrl("https://blog.csdn.net/qq_45774645/article/details/123489756?spm=1001.2014.3001.5502");
     }
@@ -18,7 +18,7 @@ public class climbUtil {
 ```
 ### 获取所有的文章markdown
 ```java
-public class climbUtil {
+public class limbUtil {
     public static void main(String[] args) {
         climb(userName);
     }
