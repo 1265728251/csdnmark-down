@@ -16,7 +16,8 @@ public class climbUtil {
         //        爬所有
 //        climb("weixin_36380516");
 //        爬单个
-        climbOne("weixin_36380516","109302548");
+       // climbOne("unique_perfect","109380996");
+        climbDetailByUrl("https://blog.csdn.net/qq_45774645/article/details/123489756?spm=1001.2014.3001.5502");
     }
 
     private static void climb(String userName) {
@@ -72,6 +73,67 @@ public class climbUtil {
         System.out.println("》》》》》》》爬虫结束《《《《《《《");
     }
 
+    private static void climbDetailByUrl(String csdnUrl) {
+        File file = new File("./_posts/");
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        String startUrl = csdnUrl;
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(startUrl).get();
+        } catch (IOException e) {
+            System.out.println("jsoup获取url失败" + e.getMessage());
+        }
+        Element element = doc.body();
+        Element htmlElement = element.select("div#content_views").first();
+        Element titleElement = element.selectFirst(".title-article");
+        String fileName = titleElement.text();
+        System.out.println(fileName);
+        // 设置jekyll格式博客title
+        String jekyllTitle = "title:   " + fileName + "\n";
+
+        // 设置jekyll格式博客categories
+        Elements elements = element.select("div.tags-box");
+        String jekyllCategories = "";
+        if (elements.size() > 1) {
+            jekyllCategories = "categories:\n";
+            jekyllCategories = getTagsBoxValue(elements, 1, jekyllCategories);
+        }
+
+        // 设置jekyll格式博客tags
+        String jekyllTags = "tags:\n";
+        jekyllTags = getTagsBoxValue(elements, 0, jekyllTags);
+
+        // 获取时间
+        Element timeElement = element.selectFirst("span.time");
+        String time = timeElement.text().substring(5);
+        System.out.println(time);
+
+        // 设置jekyll格式博客date
+        String jekyllDate = "date:   " + time + "\n";
+        String md = Html2Md.getMarkDownText(htmlElement);
+        // String md = HtmlToMd.getTextContent(htmlElement); 转出来的效果不满意，弃用
+
+        System.out.println(md);
+
+        String jekylltr = "---\n" + "layout:  post\n" + jekyllTitle + jekyllDate
+                + "author:  'zhangtao'\nheader-img: 'img/post-bg-2015.jpg'\ncatalog:   false\n"
+                + jekyllCategories + jekyllTags + "\n---\n";
+        String date = time.split(" ")[0];
+        String mdFileName = "./_posts/" + date + '-' + fileName + ".markdown";
+        md = jekylltr + md;
+        FileWriter writer;
+        try {
+            writer = new FileWriter(mdFileName);
+            writer.write(md);
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     private static void climbDetailById(String baseUrl, String articleId) {
         String startUrl = baseUrl + "article/details/" + articleId;
         Document doc = null;
