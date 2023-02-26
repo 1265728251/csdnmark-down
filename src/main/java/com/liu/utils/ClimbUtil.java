@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * 爬csdn博客工具
@@ -16,10 +17,24 @@ import java.io.IOException;
 public class ClimbUtil {
     public static void main(String[] args) {
         //        爬所有
-        climb("qq_45774645");
+       // climb("qq_45774645");
 //        爬单个
        // climbOne("unique_perfect","109380996");
-        climbDetailByUrl("https://blog.csdn.net/qq_45774645/article/details/123489756?spm=1001.2014.3001.5502");
+
+
+        // 创建并显示GUI界面
+        MyFrame frame = new MyFrame();
+
+       /* Scanner scanner = new Scanner(System.in);*/
+      /*  while (1>0){
+
+            System.out.print("请输入url:");
+            String str = scanner.next();
+            climbDetailByUrl(str);
+
+        }*/
+
+
     }
 
     public static void climb(String userName) {
@@ -72,7 +87,7 @@ public class ClimbUtil {
         System.out.println("》》》》》》》爬虫结束《《《《《《《");
     }
 
-    public static void climbDetailByUrl(String csdnUrl) {
+    public static String  climbDetailByUrl(String csdnUrl) {
         File file = new File("./_posts/");
         if (!file.exists()) {
             file.mkdir();
@@ -131,6 +146,10 @@ public class ClimbUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        StringBuilder mdBuilder = new StringBuilder();
+        mdBuilder.append(jekylltr);
+        mdBuilder.append(md);
+        return mdBuilder.toString();
 
     }
     private static void climbDetailById(String baseUrl, String articleId) {
